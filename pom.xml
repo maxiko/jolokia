@@ -338,10 +338,10 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:git:git://github.com/rhuss/jolokia.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/rhuss/jolokia.git</developerConnection>
+    <connection>scm:git:git://github.com/maxiko/jolokia.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/maxiko/jolokia.git</developerConnection>
     <tag>HEAD</tag>
-    <url>git://github.com/rhuss/jolokia.git</url>
+    <url>git://github.com/maxiko/jolokia.git</url>
   </scm>
 
   <ciManagement>
