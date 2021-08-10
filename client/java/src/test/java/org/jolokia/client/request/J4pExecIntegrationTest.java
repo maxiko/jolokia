@@ -44,9 +44,9 @@ public class J4pExecIntegrationTest extends AbstractJ4pIntegrationTest {
             j4pClient.execute(request);
             request = new J4pExecRequest(cfg,itSetup.getOperationMBean(),"fetchNumber","inc");
             J4pExecResponse resp = j4pClient.execute(request);
-            assertEquals(0L,resp.getValue());
+            assertEquals(Optional.of(0L), Optional.ofNullable(resp.getValue()));
             resp = j4pClient.execute(request);
-            assertEquals(1L,resp.getValue());
+            assertEquals(Optional.of(1L), Optional.ofNullable(resp.getValue()));
         }
     }
 
@@ -100,7 +100,7 @@ public class J4pExecIntegrationTest extends AbstractJ4pIntegrationTest {
     public void nullArgumentCheck() throws MalformedObjectNameException, J4pException {        
         for (J4pExecRequest request : execRequests("nullArgumentCheck",null,null))  {
             J4pExecResponse resp = j4pClient.execute(request);
-            assertEquals(true,resp.getValue());
+            assertEquals(Optional.of(true), Optional.ofNullable(resp.getValue()));
         }        
     }
 
@@ -108,7 +108,7 @@ public class J4pExecIntegrationTest extends AbstractJ4pIntegrationTest {
     public void emptyStringArgumentCheck() throws MalformedObjectNameException, J4pException {
         for (J4pExecRequest request : execRequests("emptyStringArgumentCheck","")) {
             J4pExecResponse resp = j4pClient.execute(request);
-            assertEquals(true,resp.getValue());
+            assertEquals(Optional.of(true), Optional.ofNullable(resp.getValue()));
         }
     }
 
@@ -152,14 +152,14 @@ public class J4pExecIntegrationTest extends AbstractJ4pIntegrationTest {
         Object args[] = new Object[] { 12,true,null, "Bla" };
         for (J4pExecRequest request : execRequests("objectArrayArg",new Object[] { args })) {
             J4pExecResponse resp = j4pClient.execute(request,"POST");
-            assertEquals(12L,resp.getValue());
+            assertEquals(Optional.of(12L), Optional.ofNullable(resp.getValue()));
         }
     }
 
     @Test
     // Lists are only supported for POST requests
     public void listArg() throws MalformedObjectNameException, J4pException {
-        List args = Arrays.asList("roland",new Integer(12),true);
+        List args = Arrays.asList("roland", 12,true);
         for (J4pExecRequest request : execRequests("listArgument",args)) {
             J4pExecResponse resp;
             resp = j4pClient.execute(request,"POST");
@@ -211,11 +211,11 @@ public class J4pExecIntegrationTest extends AbstractJ4pIntegrationTest {
                 }
                 request = new J4pExecRequest(cfg,itSetup.getOperationMBean(),"intArguments",10,20);
                 resp = j4pClient.execute(request,type);
-                assertEquals(30L, resp.getValue());
+                assertEquals(Optional.of(30L), Optional.ofNullable(resp.getValue()));
 
                 request = new J4pExecRequest(cfg,itSetup.getOperationMBean(),"intArguments",10,null);
                 resp = j4pClient.execute(request,type);
-                assertEquals(-1L,resp.getValue());
+                assertEquals(Optional.of(-1L), Optional.ofNullable(resp.getValue()));
 
                 try {
                     request = new J4pExecRequest(cfg,itSetup.getOperationMBean(),"intArguments",null,null);
